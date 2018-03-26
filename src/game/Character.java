@@ -14,6 +14,22 @@ public class Character {
     private int energy;
     private int hunger;
 
+    @Override
+    public String toString() {
+        return "Character{" +
+                "name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", height=" + height +
+                ", shirtNumber=" + shirtNumber +
+                ", attributesList=" + attributesList +
+                ", skin='" + skin + '\'' +
+                ", club=" + club +
+                ", mood=" + mood +
+                ", energy=" + energy +
+                ", hunger=" + hunger +
+                '}';
+    }
+
     public Character(String name, String firstName, int height, int shirtNumber, List<Attribute> attributesList, String skin) {
         this.name = name;
         this.firstName = firstName;

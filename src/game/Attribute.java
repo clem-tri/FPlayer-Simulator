@@ -6,6 +6,12 @@ public class Attribute {
     private int points;
     private String icon;
 
+    public Attribute(String name){
+        this.name = name;
+        this.points = 0;
+        this.icon = Image.PATH_TO_IMG+name;
+    }
+
     public String getName() {
         return name;
     }
