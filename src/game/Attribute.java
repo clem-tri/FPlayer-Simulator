@@ -8,8 +8,8 @@ public class Attribute {
 
     public Attribute(String name){
         this.name = name;
-        this.points = 0;
-        this.icon = Image.PATH_TO_IMG+name;
+        this.points = 50; // sur 100
+        this.icon = Image.PATH_TO_IMG+name.toLowerCase()+".png";
     }
 
     public String getName() {
@@ -34,5 +34,14 @@ public class Attribute {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    @Override
+    public String toString() {
+        return "Attribute{" +
+                "name='" + name + '\'' +
+                ", points=" + points +
+                ", icon='" + icon + '\'' +
+                '}';
     }
 }

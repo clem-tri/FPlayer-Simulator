@@ -1,5 +1,6 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Character {
@@ -30,16 +31,23 @@ public class Character {
                 '}';
     }
 
-    public Character(String name, String firstName, int height, int shirtNumber, List<Attribute> attributesList, String skin) {
+    public Character(String name, String firstName, int height, int shirtNumber, String skin) {
         this.name = name;
         this.firstName = firstName;
         this.height = height;
         this.shirtNumber = shirtNumber;
-        this.attributesList = attributesList;
         this.skin = skin;
         this.mood = 100;
         this.hunger = 100;
         this.energy = 100;
+
+        this.attributesList = new ArrayList<Attribute>();
+        this.attributesList.add(new Attribute("Vitesse"));
+        this.attributesList.add(new Attribute("Passe"));
+        this.attributesList.add(new Attribute("Physique"));
+        this.attributesList.add(new Attribute("Tir"));
+
+
     }
 
     public String getName() {
