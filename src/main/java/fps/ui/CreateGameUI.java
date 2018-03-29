@@ -1,19 +1,15 @@
-package ui;
+package fps.ui;
 
-import game.Attribute;
-import game.Character;
-import game.Image;
+
 import javax.swing.*;
-import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.MaskFormatter;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import fps.game.Attribute;
+import fps.game.Character;
+import fps.game.Image;
 
 public class CreateGameUI extends JFrame {
     private JPanel mainPanel;
@@ -87,16 +83,23 @@ public class CreateGameUI extends JFrame {
                 }
 
 
+                if(!nameTxtField.getText().isEmpty() && !fnameTxtField.getText().isEmpty() && rbValue != null) {
+
+                    Character newC = new Character(
+                            nameTxtField.getText(),
+                            fnameTxtField.getText(),
+                            (int) heightComboBox.getSelectedItem(),
+                            (int) numComboBox.getSelectedItem(),
+                            rbValue);
+
+                    JOptionPane.showMessageDialog(this, newC);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs!", "Champ(s) vide(s)",
+                            JOptionPane.WARNING_MESSAGE);
+                }
 
 
-                Character newC = new Character(
-                        nameTxtField.getText(),
-                        fnameTxtField.getText(),
-                        (int)heightComboBox.getSelectedItem(),
-                        (int)numComboBox.getSelectedItem(),
-                        rbValue);
-
-               JOptionPane.showMessageDialog(this, newC);
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "error",
                         JOptionPane.ERROR_MESSAGE);

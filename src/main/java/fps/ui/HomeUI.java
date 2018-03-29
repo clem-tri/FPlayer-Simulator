@@ -1,4 +1,4 @@
-package ui;
+package fps.ui;
 
 public class HomeUI {
 }

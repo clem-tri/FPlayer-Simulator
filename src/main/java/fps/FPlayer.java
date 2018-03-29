@@ -1,4 +1,6 @@
-import ui.MenuUI;
+package fps;
+
+import fps.ui.MenuUI;
 
 public class FPlayer {
 

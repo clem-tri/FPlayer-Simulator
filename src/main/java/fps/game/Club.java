@@ -1,4 +1,5 @@
-package game;
+package fps.game;
+
 
 public class Club {
     private int id;

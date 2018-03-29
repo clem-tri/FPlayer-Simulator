@@ -1,11 +1,13 @@
-package ui;
+package fps.ui;
 
-import game.Image;
+
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import fps.game.Image;
 
 public class MenuUI extends JFrame {
     private JPanel mainPanel;

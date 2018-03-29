@@ -1,4 +1,5 @@
-package game;
+package fps.game;
+
 
 public class Image {
     public static final String PATH_TO_IMG = System.getProperty("user.dir")+"\\resources\\img\\";
