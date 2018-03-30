@@ -10,7 +10,7 @@ public class Attribute {
     public Attribute(String name){
         this.name = name;
         this.points = 50; // sur 100
-        this.icon = Image.PATH_TO_IMG+name.toLowerCase()+".png";
+        this.icon = name.toLowerCase()+".png";
     }
 
     public String getName() {

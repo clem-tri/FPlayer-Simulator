@@ -2,16 +2,14 @@ package fps.ui;
 
 
 import javax.swing.*;
-import javax.swing.text.MaskFormatter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import fps.game.Attribute;
 import fps.game.Character;
 import fps.game.Image;
+import fps.utils.JsonSaveManager;
 
-public class CreateGameUI extends JFrame {
+public class CreateGameUI extends JFrame  {
     private JPanel mainPanel;
     private JTextField nameTxtField;
     private JTextField fnameTxtField;
@@ -27,10 +25,8 @@ public class CreateGameUI extends JFrame {
     private JPanel formPanel;
     private JButton cancelButton;
 
-    MaskFormatter formatter;
 
-
-    public CreateGameUI() {
+    public CreateGameUI()  {
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(400, 500);
@@ -70,9 +66,11 @@ public class CreateGameUI extends JFrame {
         };
     }
 
-    private ActionListener createPlayer() {
+    private ActionListener createPlayer()  {
         return (ActionEvent e) -> {
             try {
+
+
 
                 String rbValue = null;
                 // get rb selected value
@@ -85,6 +83,9 @@ public class CreateGameUI extends JFrame {
 
                 if(!nameTxtField.getText().isEmpty() && !fnameTxtField.getText().isEmpty() && rbValue != null) {
 
+                    buttonSubmit.setEnabled(false);
+                    cancelButton.setEnabled(false);
+
                     Character newC = new Character(
                             nameTxtField.getText(),
                             fnameTxtField.getText(),
@@ -92,7 +93,14 @@ public class CreateGameUI extends JFrame {
                             (int) numComboBox.getSelectedItem(),
                             rbValue);
 
-                    JOptionPane.showMessageDialog(this, newC);
+
+                    JsonSaveManager jsonSaveManager = new JsonSaveManager();
+                    jsonSaveManager.createSave(newC);
+
+                    JOptionPane.showMessageDialog(this, "Partie créée");
+                    this.dispose();
+                    new HomeUI(newC);
+
                 }
                 else{
                     JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs!", "Champ(s) vide(s)",
@@ -100,8 +108,8 @@ public class CreateGameUI extends JFrame {
                 }
 
 
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage(), "error",
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
 

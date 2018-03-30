@@ -30,6 +30,7 @@ public class MenuUI extends JFrame {
         mainPanel.setOpaque(false);
 
         nouvellePartieButton.addActionListener(newGame());
+        chargerPartieButton.addActionListener(loadGame());
         quitterButton.addActionListener(quit());
 
         add(mainPanel);
@@ -41,15 +42,24 @@ public class MenuUI extends JFrame {
 
     }
 
-    private ActionListener quit() {
-        return e -> System.exit(0);
-    }
+
 
     private ActionListener newGame() {
         return (ActionEvent e) -> {
             this.dispose();
             new CreateGameUI();
         };
+    }
+
+    private ActionListener loadGame(){
+        return (ActionEvent e) -> {
+            this.dispose();
+            new LoadGameUI();
+        };
+    }
+
+    private ActionListener quit() {
+        return e -> System.exit(0);
     }
 
 }

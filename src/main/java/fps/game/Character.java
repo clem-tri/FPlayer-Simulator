@@ -1,10 +1,14 @@
 package fps.game;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Character {
+    private String id;
     private String name;
     private String firstName;
     private int height;
@@ -15,24 +19,16 @@ public class Character {
     private int mood;
     private int energy;
     private int hunger;
-
+    private Date last_updated;
     @Override
     public String toString() {
-        return "Character{" +
-                "name='" + name + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", height=" + height +
-                ", shirtNumber=" + shirtNumber +
-                ", attributesList=" + attributesList +
-                ", skin='" + skin + '\'' +
-                ", club=" + club +
-                ", mood=" + mood +
-                ", energy=" + energy +
-                ", hunger=" + hunger +
-                '}';
+        String newLine = System.getProperty("line.separator");
+
+        return "<html>"+name+"<br/>"+firstName +"<br/>"+"Moral: "+mood+"<br/>"+"Faim: "+hunger+"<br/>"+"Energie: "+energy+"</html>";
     }
 
     public Character(String name, String firstName, int height, int shirtNumber, String skin) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.firstName = firstName;
         this.height = height;
@@ -49,6 +45,14 @@ public class Character {
         this.attributesList.add(new Attribute("Tir"));
 
 
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

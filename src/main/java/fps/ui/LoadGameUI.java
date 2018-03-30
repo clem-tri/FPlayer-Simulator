@@ -1,5 +1,60 @@
 package fps.ui;
 
 
-public class LoadGameUI {
+import fps.game.Character;
+import fps.game.Image;
+import fps.utils.JsonSaveManager;
+import fps.utils.SavesRenderer;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class LoadGameUI extends JFrame {
+    private JPanel mainPanel;
+    private JPanel savesPanel;
+    private JList<Character> savesList;
+    private JButton chargerButton;
+    private JButton retourButton;
+
+
+    public LoadGameUI() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(400, 500);
+        setTitle("Football Player Simulator - Charger partie");
+        Image wallpaper = new Image("menu_wp.jpg");
+        JsonSaveManager jsonSaveManager = new JsonSaveManager();
+        DefaultListModel<Character> files = jsonSaveManager.loadSavesFiles();
+        setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
+        SavesRenderer renderer = new SavesRenderer();
+        savesList.setCellRenderer(renderer);
+        retourButton.addActionListener(back());
+        // important!
+        setLayout(new GridBagLayout());
+        //
+        add(mainPanel);
+        setResizable(false);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+        if(!files.isEmpty())
+            savesList.setModel(files);
+        else {
+            chargerButton.setEnabled(false);
+            JOptionPane.showMessageDialog(this, "Aucune sauvegarde disponible", "Infomation", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+
+    private ActionListener back() {
+        return (ActionEvent e) -> {
+            this.dispose();
+            new MenuUI();
+        };
+    }
+
+
+
+
 }
