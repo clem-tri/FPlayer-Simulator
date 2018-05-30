@@ -30,6 +30,7 @@ public class LoadGameUI extends JFrame {
         SavesRenderer renderer = new SavesRenderer();
         savesList.setCellRenderer(renderer);
         retourButton.addActionListener(back());
+        chargerButton.addActionListener(load());
         // important!
         setLayout(new GridBagLayout());
         //
@@ -46,6 +47,12 @@ public class LoadGameUI extends JFrame {
         }
     }
 
+    private ActionListener load(){
+        return (ActionEvent e) -> {
+            this.dispose();
+            new HomeUI(savesList.getSelectedValue());
+        };
+    }
 
     private ActionListener back() {
         return (ActionEvent e) -> {
@@ -53,6 +60,8 @@ public class LoadGameUI extends JFrame {
             new MenuUI();
         };
     }
+
+
 
 
 

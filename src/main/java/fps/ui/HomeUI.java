@@ -31,7 +31,10 @@ public class HomeUI extends JFrame {
         Image wallpaper = new Image("menu_wp.jpg");
         setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
         menuButton.addActionListener(back());
-        jlbCharacterInfo.setText(currentCharacter.toString());
+        passesButton.addActionListener(passesUI());
+        tirsButton.addActionListener(tirsUI());
+        this.setCurrentCharacter(currentCharacter);
+        jlbCharacterInfo.setText(this.getCurrentCharacter().toString());
         // important!
         setLayout(new GridBagLayout());
         add(mainPanel);
@@ -49,13 +52,27 @@ public class HomeUI extends JFrame {
         };
     }
 
+    private ActionListener passesUI(){
+        return (ActionEvent e) -> {
+            this.dispose();
+            new PassTrainingUI(this.getCurrentCharacter());
+        };
+    }
+
+    private ActionListener tirsUI(){
+        return (ActionEvent e) -> {
+            this.dispose();
+            new ShootTrainingUI(this.getCurrentCharacter());
+        };
+    }
+
 
 
     private Character getCurrentCharacter(){
         return  this.currentCharacter;
     }
 
-    public void setCurrentCharacter(Character c){
+    private void setCurrentCharacter(Character c){
         this.currentCharacter = c;
     }
 

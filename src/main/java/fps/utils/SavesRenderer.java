@@ -30,7 +30,9 @@ public class SavesRenderer extends JLabel implements ListCellRenderer<Character>
 
     @Override
     public Component getListCellRendererComponent(JList<? extends Character> list, Character value, int index, boolean isSelected, boolean cellHasFocus) {
-       setText(value.getFirstName()+" "+value.getName());
+
+
+        setText(value.getFirstName()+" "+value.getName());
 
         if (isSelected)
 
