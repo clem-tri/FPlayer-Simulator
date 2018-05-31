@@ -3,13 +3,15 @@ package fps.ui;
 
 import fps.game.Character;
 import fps.game.Image;
+import fps.utils.JsonSaveManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
-public class HomeUI extends JFrame {
+public class HomeUI extends CustomUI {
 
     private Character currentCharacter;
 
@@ -25,7 +27,7 @@ public class HomeUI extends JFrame {
     private JPanel menuBtnPanel;
 
     public HomeUI(Character currentCharacter){
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        super(currentCharacter);
         setSize(1000, 500);
         setTitle("Football Player Simulator");
         Image wallpaper = new Image("menu_wp.jpg");
@@ -74,6 +76,18 @@ public class HomeUI extends JFrame {
 
     private void setCurrentCharacter(Character c){
         this.currentCharacter = c;
+    }
+
+    @Override
+    public void dispose() {
+        JsonSaveManager jsonSaveManager = new JsonSaveManager();
+        try {
+            jsonSaveManager.createSave(getCurrentCharacter());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        super.dispose();
     }
 
 }
