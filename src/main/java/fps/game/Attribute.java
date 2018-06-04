@@ -26,7 +26,12 @@ public class Attribute {
     }
 
     public void setPoints(int points) {
-        this.points = points;
+        if(points <= 0)
+            this.points = 0;
+        else if(points >= 100)
+            this.points = 100;
+        else
+            this.points = points;
     }
 
     public String getIcon() {
@@ -39,10 +44,6 @@ public class Attribute {
 
     @Override
     public String toString() {
-        return "Attribute{" +
-                "name='" + name + '\'' +
-                ", points=" + points +
-                ", icon='" + icon + '\'' +
-                '}';
+        return this.name+": "+this.points+"<br/>";
     }
 }

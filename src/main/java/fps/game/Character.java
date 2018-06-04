@@ -1,11 +1,7 @@
 package fps.game;
 
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Character {
     private String id;
@@ -22,8 +18,6 @@ public class Character {
     private Date last_updated;
     @Override
     public String toString() {
-        String newLine = System.getProperty("line.separator");
-
         return "<html>"+name+"<br/>"+firstName +"<br/>"+"Moral: "+mood+"<br/>"+"Faim: "+hunger+"<br/>"+"Energie: "+energy+"</html>";
     }
 
@@ -91,6 +85,18 @@ public class Character {
         return attributesList;
     }
 
+    public String getAttributesListToString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("<html>");
+        for (Attribute value : this.attributesList) {
+            builder.append(value);
+        }
+        builder.append("</html>");
+        return builder.toString();
+
+
+    }
+
     public void setAttributesList(List<Attribute> attributesList) {
         this.attributesList = attributesList;
     }
@@ -116,7 +122,12 @@ public class Character {
     }
 
     public void setMood(int mood) {
-        this.mood = mood;
+        if(mood <= 0)
+            this.mood = 0;
+        else if(mood >= 100)
+            this.mood = 100;
+        else
+            this.mood = mood;
     }
 
     public int getEnergy() {
@@ -124,7 +135,12 @@ public class Character {
     }
 
     public void setEnergy(int energy) {
-        this.energy = energy;
+        if(energy <= 0)
+            this.energy = 0;
+        else if(energy >= 100)
+            this.energy = 100;
+        else
+            this.energy = energy;
     }
 
     public int getHunger() {
@@ -132,7 +148,12 @@ public class Character {
     }
 
     public void setHunger(int hunger) {
-        this.hunger = hunger;
+        if(hunger <= 0)
+            this.hunger = 0;
+        else if(hunger >= 100)
+            this.hunger = 100;
+        else
+            this.hunger = hunger;
     }
 
 

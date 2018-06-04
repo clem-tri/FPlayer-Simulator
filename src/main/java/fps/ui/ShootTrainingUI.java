@@ -1,8 +1,10 @@
 package fps.ui;
 
+import fps.game.Attribute;
 import fps.game.Character;
 import fps.game.Image;
 import fps.utils.JsonSaveManager;
+import org.w3c.dom.Attr;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,11 +17,17 @@ public class ShootTrainingUI extends CustomUI {
     private Character currentCharacter;
 
     private JPanel mainPanel;
-    private JPanel titlePanel;
-    private JLabel jlbCharacterInfo;
     private JPanel menuBtnPanel;
     private JButton retourButton;
     private JPanel contentPanel;
+    private JPanel titlePanel;
+    private JProgressBar energyBar;
+    private JProgressBar hungerBar;
+    private JProgressBar moodBar;
+    private JProgressBar vitesseBar;
+    private JProgressBar passeBar;
+    private JProgressBar physiqueBar;
+    private JProgressBar tirBar;
     private JButton upLeftChoice;
     private JButton upRightChoice;
     private JButton downRightChoice;
@@ -37,36 +45,36 @@ public class ShootTrainingUI extends CustomUI {
         Image wallpaper = new Image("goals.png");
         setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
         this.setCurrentCharacter(currentCharacter);
-        this.jlbCharacterInfo.setText(this.getCurrentCharacter().toString());
+        this.setStatsBars();
 
 
         // Content Panel
         this.contentPanel.setLayout(null);
         this.contentPanel.add(this.goalKeeper);
         // Goalkeeper IMG
-        this.setGoalkeeperImg("shoot/gk_standing.png", 340, 55,100, 152);
+        this.setGoalkeeperImg("shoot/gk_standing.png", 340, 100,100, 152);
 
 
             // Button choice up-left
         this.upLeftChoice = new JButton("X");
         this.upLeftChoice.addActionListener(shot());
         contentPanel.add(upLeftChoice);
-        this.upLeftChoice.setBounds(220,70, 50, 40);
+        this.upLeftChoice.setBounds(220,110, 50, 40);
             // Button choice down-left
         this.downLeftChoice = new JButton("X");
         this.downLeftChoice.addActionListener(shot());
         contentPanel.add(downLeftChoice);
-        this.downLeftChoice.setBounds(220,150, 50, 40);
+        this.downLeftChoice.setBounds(220,200, 50, 40);
             // Button choice up-right
         this.upRightChoice = new JButton("X");
         this.upRightChoice.addActionListener(shot());
         contentPanel.add(upRightChoice);
-        this.upRightChoice.setBounds(500,70, 50, 40);
+        this.upRightChoice.setBounds(500,110, 50, 40);
             // Button choice down-left
         this.downRightChoice = new JButton("X");
         this.downRightChoice.addActionListener(shot());
         contentPanel.add(downRightChoice);
-        this.downRightChoice.setBounds(500,150, 50, 40);
+        this.downRightChoice.setBounds(500,200, 50, 40);
 
 
 
@@ -82,15 +90,6 @@ public class ShootTrainingUI extends CustomUI {
     }
 
 
-
-
-    private Character getCurrentCharacter(){
-        return  this.currentCharacter;
-    }
-
-    private void setCurrentCharacter(Character c){
-        this.currentCharacter = c;
-    }
 
     private void setGoalkeeperImg(String pathToImg, int boundX, int boundY, int scaleW, int scaleH){
         ImageIcon goalkeeperImg = new ImageIcon(new Image(pathToImg).getImage());
@@ -109,6 +108,22 @@ public class ShootTrainingUI extends CustomUI {
         };
     }
 
+    private void setStatsBars(){
+        energyBar.setValue(this.getCurrentCharacter().getEnergy());
+
+        hungerBar.setValue(this.getCurrentCharacter().getHunger());
+
+        moodBar.setValue(this.getCurrentCharacter().getMood());
+
+        //Attributes
+        vitesseBar.setValue(this.getCurrentCharacter().getAttributesList().get(0).getPoints());
+        passeBar.setValue(this.getCurrentCharacter().getAttributesList().get(1).getPoints());
+        physiqueBar.setValue(this.getCurrentCharacter().getAttributesList().get(2).getPoints());
+        tirBar.setValue(this.getCurrentCharacter().getAttributesList().get(3).getPoints());
+
+
+    }
+
     private ActionListener shot(){
 
 
@@ -120,6 +135,7 @@ public class ShootTrainingUI extends CustomUI {
             int random = (int)(Math.random() * range) + min;
             int choice = 0;
             this.essais += 1;
+            this.retourButton.setEnabled(false);
 
             if(e.getSource() == this.upLeftChoice){
                  choice = 1;
@@ -149,21 +165,24 @@ public class ShootTrainingUI extends CustomUI {
 
 
             this.contentPanel.add(resultLabel);
-            resultLabel.setBounds(280 + (20 * this.essais) ,0, 20, 20);
+            resultLabel.setBounds(280 + (20 * this.essais) ,50, 20, 20);
 
 
             //changement image du gardien
-                if(random == 1){
-                    this.setGoalkeeperImg("shoot/gk_upleft.png",  220, 55,208, 152);
-                }
-                else if(random == 2){
-                    this.setGoalkeeperImg("shoot/gk_downleft.png",220, 150,210, 92);
-                }
-                else if(random == 3){
-                    this.setGoalkeeperImg("shoot/gk_upright.png", 350, 55,208, 152);
-                }
-                else if(random == 4){
-                    this.setGoalkeeperImg("shoot/gk_downright.png",340, 150,210, 92);
+                switch (random){
+                    case 1:
+                        this.setGoalkeeperImg("shoot/gk_upleft.png",  220, 100,208, 152);
+                        break;
+                    case 2:
+                        this.setGoalkeeperImg("shoot/gk_downleft.png",220, 195,210, 92);
+                        break;
+                    case 3:
+                        this.setGoalkeeperImg("shoot/gk_upright.png", 350, 100,208, 152);
+                        break;
+                    case 4:
+                        this.setGoalkeeperImg("shoot/gk_downright.png",340, 195,210, 92);
+                        break;
+
                 }
 
 
@@ -176,16 +195,27 @@ public class ShootTrainingUI extends CustomUI {
                             c.setEnabled(false);
                 }
 
-                this.setGoalkeeperImg("shoot/gk_standing.png", 340, 55,100, 152);
+                this.setGoalkeeperImg("shoot/gk_standing.png", 340, 100,100, 152);
                     
 
                 String message ="Vous avez fait un score de "+this.resultat+"/10 tirs" +
-                        "\n Energie:  -10";
+                        "\n Energie:  -10" +
+                        "\n Faim: +10" +
+                        "\n Tir: +"+this.resultat +
+                        "\n Moral: +"+this.resultat;
+
 
                 this.getCurrentCharacter().setEnergy(this.getCurrentCharacter().getEnergy() - 10);
-                jlbCharacterInfo.setText(this.getCurrentCharacter().toString());
+                this.getCurrentCharacter().setHunger(this.getCurrentCharacter().getHunger() + 10);
+                this.getCurrentCharacter().setMood(this.getCurrentCharacter().getMood() + this.resultat);
+                Attribute atrTir = this.getCurrentCharacter().getAttributesList().get(3);
+                atrTir.setPoints(atrTir.getPoints()+this.resultat);
+                this.setStatsBars();
+
                 JOptionPane.showMessageDialog(this, message  , "",
-                        JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                this.retourButton.setEnabled(true);
             }
 
 
