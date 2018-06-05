@@ -1,6 +1,7 @@
 package fps.ui;
 
 import fps.game.Character;
+import fps.game.Image;
 import fps.utils.JsonSaveManager;
 
 import javax.swing.*;
@@ -13,6 +14,11 @@ public class CustomUI extends JFrame {
 
 
     public CustomUI(Character c){
+        setTitle("Football Player Simulator");
+        Image wallpaper = new Image("menu_wp.jpg");
+        setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
+
+
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         addWindowListener(new java.awt.event.WindowAdapter() {

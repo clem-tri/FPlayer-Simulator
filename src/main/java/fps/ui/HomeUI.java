@@ -40,13 +40,12 @@ public class HomeUI extends CustomUI {
     public HomeUI(Character currentCharacter){
         super(currentCharacter);
         setSize(1000, 500);
-        setTitle("Football Player Simulator");
-        Image wallpaper = new Image("menu_wp.jpg");
-        setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
+
 
         menuButton.addActionListener(retour());
         passesButton.addActionListener(passesUI());
         tirsButton.addActionListener(tirsUI());
+        vitesseButton.addActionListener(courirUI());
         seReposerButton.addActionListener(seReposer());
         mangerButton.addActionListener(manger());
 
@@ -147,6 +146,14 @@ public class HomeUI extends CustomUI {
         return (ActionEvent e) -> {
             this.dispose();
             new ShootTrainingUI(this.getCurrentCharacter());
+        };
+    }
+
+
+    private ActionListener courirUI(){
+        return (ActionEvent e) -> {
+            this.dispose();
+            new RunTrainingUI(this.getCurrentCharacter());
         };
     }
 
