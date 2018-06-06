@@ -42,7 +42,7 @@ public class ShootTrainingUI extends CustomUI {
         super(currentCharacter);
         setSize(800, 500);
         setTitle("Football Player Simulator - Tirs");
-        Image wallpaper = new Image("goals.png");
+        Image wallpaper = new Image("shoot/goals.png");
         setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
         this.setCurrentCharacter(currentCharacter);
         this.setStatsBars();

@@ -49,8 +49,12 @@ public class LoadGameUI extends JFrame {
 
     private ActionListener load(){
         return (ActionEvent e) -> {
-            this.dispose();
-            new HomeUI(savesList.getSelectedValue());
+            if(savesList.getSelectedValue() != null){
+                this.dispose();
+                new HomeUI(savesList.getSelectedValue());
+            }
+            else
+                JOptionPane.showMessageDialog(this,"Veuillez sélectionner une sauvegarde", "Aucune sauvegarde sélectionné", JOptionPane.WARNING_MESSAGE);
         };
     }
 

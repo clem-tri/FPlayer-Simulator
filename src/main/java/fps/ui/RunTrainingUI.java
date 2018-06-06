@@ -29,20 +29,34 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
     private JButton retourButton;
     private JButton commencerButton;
     private JLabel secondsLbl;
+    private JLabel leftArrow;
+    private JLabel rightArrow;
+    private JProgressBar scoreBar;
     private ArrayList<Integer> keysPressed;
-    static int interval = 10;
+    static int interval = 11;
+    static int countdownDuration = 3;
     static Timer timer;
+    private Image leftArrowImg;
+    private Image rightArrowImg;
+    private Image crossImg;
 
     public RunTrainingUI(Character currentCharacter) {
         super(currentCharacter);
 
-        this.keysPressed = new ArrayList<Integer>();
+        this.keysPressed = new ArrayList<>();
 
         setSize(800, 500);
         setTitle("Football Player Simulator - Vitesse");
         this.setCurrentCharacter(currentCharacter);
         this.setStatsBars();
         commencerButton.addActionListener(startTimer());
+        retourButton.addActionListener(back());
+
+         leftArrowImg = new Image("run/leftarrow.png");
+
+         rightArrowImg = new Image("run/rightarrow.png");
+
+         crossImg = new Image("run/cross.png");
 
 
 
@@ -57,37 +71,61 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
         setVisible(true);
         addKeyListener(this);
         JOptionPane.showMessageDialog(this,
-                "Pour débuter, cliquez sur Commencer puis appuyez le plus rapidement possible sur les touches fléchées gauche et droite",
+                "Pour débuter, cliquez sur Commencer, attendez la fin du décompte jusqu'à 3, " +
+                        "\npuis appuyez le plus de fpos possible sur les touches fléchées gauche et droite en 10 secondes",
                 "Instructions",
                 JOptionPane.INFORMATION_MESSAGE);
 
 
         setFocusable(true);
 
+    }
 
-
-
-
-
-
-
-
+    private ActionListener back(){
+        return (ActionEvent e) -> {
+            this.dispose();
+            new HomeUI(this.getCurrentCharacter());
+        };
     }
 
 
 
     private ActionListener startTimer(){
         return (ActionEvent e) -> {
-            this.commencerButton.setEnabled(false);
-            this.requestFocus();
+            commencerButton.setEnabled(false);
+            interval = 11;
+            countdownDuration = 3;
             int delay = 1000;
             int period = 1000;
-            timer = new Timer();
-            timer.scheduleAtFixedRate(new TimerTask() {
-                public void run(){
-                   customRun();
+
+
+            Timer countdown = new Timer();
+            countdown.scheduleAtFixedRate(new TimerTask(){
+                public void run() {
+                    if(countdownDuration == 1){
+                        countdown.cancel();
+
+
+                        requestFocus();
+
+                        timer = new Timer();
+                        timer.scheduleAtFixedRate(new TimerTask() {
+                            public void run(){
+                                customRun();
+                            }
+                        }, delay, period);
+                    }
+                    else
+                        secondsLbl.setText(String.valueOf(--countdownDuration));
+
+
+
                 }
-            }, delay, period);
+            },delay,period);
+
+            //
+
+
 
 
         };
@@ -115,7 +153,7 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
 
             this.setStatsBars();
 
-            String message = "Résultats : "+keysPressed.size()
+            String message = "Résultat : "+keysPressed.size()
                     + "\nVitesse: +"+String.valueOf(points)
                     + "\nEnergie: -20"
                     +"\nFaim: +20"
@@ -147,25 +185,37 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
 
-        if(interval > 0) {
+        if(interval > 0 && interval < 11) {
 
             if(e.getKeyCode() == 37 || e.getKeyCode() == 39){
 
                 if(!this.keysPressed.isEmpty()){
 
                     if(this.keysPressed.get(this.keysPressed.size()-1) != e.getKeyCode()){
-
+                        if(e.getKeyCode() == 37)
+                            leftArrow.setIcon(new ImageIcon(leftArrowImg.getImage()));
+                        else
+                            rightArrow.setIcon(new ImageIcon(rightArrowImg.getImage()));
                         this.keysPressed.add(e.getKeyCode());
 
+                    }
+                    else{
+                        if(e.getKeyCode() == 37)
+                            leftArrow.setIcon(new ImageIcon(crossImg.getImage()));
+                        else
+                            rightArrow.setIcon(new ImageIcon(crossImg.getImage()));
                     }
                 }
                 else
                     this.keysPressed.add(e.getKeyCode());
+
+                this.scoreBar.setValue(this.keysPressed.size());
 
             }
         }
@@ -174,5 +224,9 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if(e.getKeyCode() == 37)
+            leftArrow.setIcon(null);
+        else if(e.getKeyCode() == 39)
+            rightArrow.setIcon(null);
     }
 }
