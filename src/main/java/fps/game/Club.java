@@ -1,16 +1,23 @@
 package fps.game;
 
 
+import java.util.UUID;
+
 public class Club {
-    private int id;
+    private String id;
     private String name;
     private String logo;
 
-    public int getId() {
+    public Club(String name){
+        this.id = UUID.randomUUID().toString();
+        this.name = name;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -18,6 +18,7 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
     private JPanel mainPanel;
     private JPanel contentPanel;
     private JPanel titlePanel;
+    private JPanel actionsPanel;
     private JProgressBar energyBar;
     private JProgressBar hungerBar;
     private JProgressBar moodBar;
@@ -32,21 +33,25 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
     private JLabel leftArrow;
     private JLabel rightArrow;
     private JProgressBar scoreBar;
+
     private ArrayList<Integer> keysPressed;
-    static int interval = 11;
-    static int countdownDuration = 3;
-    static Timer timer;
+    private static int interval = 11;
+    private static int countdownDuration = 3;
+    private static Timer timer;
     private Image leftArrowImg;
     private Image rightArrowImg;
     private Image crossImg;
+    private JLabel runner = new JLabel();
 
-    public RunTrainingUI(Character currentCharacter) {
+    public RunTrainingUI(Character currentCharacter){
         super(currentCharacter);
 
         this.keysPressed = new ArrayList<>();
 
-        setSize(800, 500);
+        setSize(775, 600);
         setTitle("Football Player Simulator - Vitesse");
+        Image wallpaper = new Image("run/trackandfield.png");
+        setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
         this.setCurrentCharacter(currentCharacter);
         this.setStatsBars();
         commencerButton.addActionListener(startTimer());
@@ -60,6 +65,9 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
 
 
 
+        contentPanel.setLayout(null);
+        contentPanel.add(runner);
+        this.setRunnerImg("run/runner.png", 30,120);
 
         // important!
         setLayout(new GridBagLayout());
@@ -72,13 +80,20 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
         addKeyListener(this);
         JOptionPane.showMessageDialog(this,
                 "Pour débuter, cliquez sur Commencer, attendez la fin du décompte jusqu'à 3, " +
-                        "\npuis appuyez le plus de fpos possible sur les touches fléchées gauche et droite en 10 secondes",
+                        "\npuis appuyez le plus de fois possible sur les touches fléchées gauche et droite en 10 secondes",
                 "Instructions",
                 JOptionPane.INFORMATION_MESSAGE);
 
 
         setFocusable(true);
 
+    }
+
+
+    private void setRunnerImg(String pathToImg, int boundX, int boundY){
+        ImageIcon runnerImg = new ImageIcon(new Image(pathToImg).getImage());
+        this.runner.setIcon(runnerImg);
+        this.runner.setBounds(boundX,boundY,runner.getPreferredSize().width, runner.getPreferredSize().height);
     }
 
     private ActionListener back(){
@@ -104,9 +119,8 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
                 public void run() {
                     if(countdownDuration == 1){
                         countdown.cancel();
+                        secondsLbl.setText("GO!");
 
-
-                        requestFocus();
 
                         timer = new Timer();
                         timer.scheduleAtFixedRate(new TimerTask() {
@@ -203,6 +217,8 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
                         else
                             rightArrow.setIcon(new ImageIcon(rightArrowImg.getImage()));
                         this.keysPressed.add(e.getKeyCode());
+                        this.runner.setBounds((int) (runner.getBounds().getX() + 6),(int)runner.getBounds().getY(),runner.getPreferredSize().width, runner.getPreferredSize().height);
+                        this.scoreBar.setValue(this.keysPressed.size());
 
                     }
                     else{
@@ -212,10 +228,16 @@ public class RunTrainingUI extends CustomUI implements KeyListener{
                             rightArrow.setIcon(new ImageIcon(crossImg.getImage()));
                     }
                 }
-                else
+                else{
                     this.keysPressed.add(e.getKeyCode());
+                    this.runner.setBounds((int) (runner.getBounds().getX() + 6),(int)runner.getBounds().getY(),runner.getPreferredSize().width, runner.getPreferredSize().height);
+                    this.scoreBar.setValue(this.keysPressed.size());
+                }
 
-                this.scoreBar.setValue(this.keysPressed.size());
+
+
+
+
 
             }
         }

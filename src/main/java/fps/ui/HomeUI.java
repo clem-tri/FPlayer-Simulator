@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class HomeUI extends CustomUI {
 
@@ -35,7 +36,9 @@ public class HomeUI extends CustomUI {
     private JProgressBar passeBar;
     private JProgressBar physiqueBar;
     private JProgressBar tirBar;
+    private JButton rejoindreUnClubButton;
     private JLabel jlbAttributes;
+    private ArrayList<JButton> trainingButtons;
 
     public HomeUI(Character currentCharacter){
         super(currentCharacter);
@@ -44,14 +47,41 @@ public class HomeUI extends CustomUI {
 
         menuButton.addActionListener(retour());
         passesButton.addActionListener(passesUI());
+        physiqueButton.addActionListener(physiqueUI());
         tirsButton.addActionListener(tirsUI());
         vitesseButton.addActionListener(courirUI());
         seReposerButton.addActionListener(seReposer());
         mangerButton.addActionListener(manger());
 
         this.setCurrentCharacter(currentCharacter);
-        //jlbCharacterInfo.setText(this.getCurrentCharacter().toString());
-        //jlbAttributes.setText(this.getCurrentCharacter().getAttributesListToString());
+
+        if(this.getCurrentCharacter().getClub() == null){
+            boolean rejoindreClub = false;
+            for (Attribute a: this.getCurrentCharacter().getAttributesList()) {
+                rejoindreClub = a.getPoints() >= 60;
+                if(!rejoindreClub)
+                    break;
+            }
+
+            if(rejoindreClub)
+                rejoindreUnClubButton.setEnabled(true);
+            else{
+                rejoindreUnClubButton.setEnabled(false);
+                rejoindreUnClubButton.setToolTipText("<html><b>Vous devez avoir 60 points dans tous vos attributs.</b></html>");
+            }
+
+        }
+        else
+            rejoindreUnClubButton.setVisible(false);
+
+        this.trainingButtons = new ArrayList<JButton>() {{
+            add(passesButton);
+            add(physiqueButton);
+            add(tirsButton);
+            add(vitesseButton);
+        }};
+
+        this.disableTrainings();
         this.setStatsBars();
 
 
@@ -83,6 +113,25 @@ public class HomeUI extends CustomUI {
     }
 
 
+    private void disableTrainings(){
+        if(getCurrentCharacter().getEnergy() == 0 || getCurrentCharacter().getMood() == 0 || getCurrentCharacter().getHunger() == 100){
+            for (JButton jb: this.trainingButtons
+                 ) {
+                jb.setEnabled(false);
+                jb.setToolTipText("Votre Energie/Faim/Humeur est trop faible");
+            }
+        }
+        else{
+            for (JButton jb: this.trainingButtons
+                    ) {
+                jb.setEnabled(true);
+            }
+        }
+
+
+    }
+
+
     private ActionListener retour() {
         return (ActionEvent e) -> {
             this.dispose();
@@ -103,6 +152,7 @@ public class HomeUI extends CustomUI {
             }
 
             this.setStatsBars();
+            this.disableTrainings();
             saveCharacterJson();
             String message = "\n Faim: +30" +
                     "\n Energie: +40" +
@@ -124,6 +174,7 @@ public class HomeUI extends CustomUI {
             }
 
             this.setStatsBars();
+            this.disableTrainings();
             saveCharacterJson();
             String message = "\n Faim: -40"+
                     "\n Tir: -5" +
@@ -139,6 +190,13 @@ public class HomeUI extends CustomUI {
         return (ActionEvent e) -> {
             this.dispose();
             new PassTrainingUI(this.getCurrentCharacter());
+        };
+    }
+
+    private ActionListener physiqueUI(){
+        return (ActionEvent e) -> {
+            this.dispose();
+            new PhysicalTrainingUI(this.getCurrentCharacter());
         };
     }
 
