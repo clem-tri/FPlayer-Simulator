@@ -29,7 +29,7 @@ public class Character {
         this.shirtNumber = shirtNumber;
         this.skin = skin;
         this.mood = 100;
-        this.hunger = 100;
+        this.hunger = 0;
         this.energy = 100;
 
         this.attributesList = new ArrayList<Attribute>();

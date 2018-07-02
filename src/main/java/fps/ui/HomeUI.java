@@ -63,8 +63,11 @@ public class HomeUI extends CustomUI {
                     break;
             }
 
-            if(rejoindreClub)
+            if(rejoindreClub){
                 rejoindreUnClubButton.setEnabled(true);
+                rejoindreUnClubButton.addActionListener(rejoindreClubUI());
+            }
+
             else{
                 rejoindreUnClubButton.setEnabled(false);
                 rejoindreUnClubButton.setToolTipText("<html><b>Vous devez avoir 60 points dans tous vos attributs.</b></html>");
@@ -188,15 +191,17 @@ public class HomeUI extends CustomUI {
 
     private ActionListener passesUI(){
         return (ActionEvent e) -> {
-            this.dispose();
-            new PassTrainingUI(this.getCurrentCharacter());
+           /* this.dispose();
+            new PassTrainingUI(this.getCurrentCharacter());*/
+           JOptionPane.showMessageDialog(this,"A venir...", "Indisponible", JOptionPane.INFORMATION_MESSAGE);
         };
     }
 
     private ActionListener physiqueUI(){
         return (ActionEvent e) -> {
-            this.dispose();
-            new PhysicalTrainingUI(this.getCurrentCharacter());
+          /*  this.dispose();
+            new PhysicalTrainingUI(this.getCurrentCharacter());*/
+            JOptionPane.showMessageDialog(this,"A venir...", "Indisponible", JOptionPane.INFORMATION_MESSAGE);
         };
     }
 
@@ -213,6 +218,13 @@ public class HomeUI extends CustomUI {
             this.dispose();
             new RunTrainingUI(this.getCurrentCharacter());
         };
+    }
+
+    private ActionListener rejoindreClubUI(){
+        return (ActionEvent e) -> {
+                JOptionPane.showMessageDialog(this,"A venir...", "Indisponible", JOptionPane.INFORMATION_MESSAGE);
+            };
+
     }
 
     private void saveCharacterJson(){

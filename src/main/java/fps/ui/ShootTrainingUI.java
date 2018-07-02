@@ -87,6 +87,12 @@ public class ShootTrainingUI extends CustomUI {
         setLocationRelativeTo(null);
 
         setVisible(true);
+
+        JOptionPane.showMessageDialog(this,
+                "Choisissez de quel coté tirer pour tromper le gardien." +
+                        "\nVous avez 10 essais !",
+                "Instructions",
+                JOptionPane.INFORMATION_MESSAGE);
     }
 
 
