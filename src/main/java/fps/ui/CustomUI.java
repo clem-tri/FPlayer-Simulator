@@ -16,6 +16,8 @@ public class CustomUI extends JFrame {
     public CustomUI(Character c){
         setTitle("Football Player Simulator");
         Image wallpaper = new Image("menu_wp.jpg");
+        Image icon = new Image("icon.png");
+        setIconImage(new ImageIcon(icon.getImage()).getImage());
         setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
 
 

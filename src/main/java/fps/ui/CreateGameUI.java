@@ -15,11 +15,6 @@ public class CreateGameUI extends JFrame  {
     private JTextField fnameTxtField;
     private JComboBox<Integer> heightComboBox;
     private JComboBox<Integer> numComboBox;
-    //TODO: sprites pour skin
-    private JRadioButton rb1RadioButton;
-    private JRadioButton rb2RadioButton;
-    private JRadioButton rb3RadioButton;
-    private JRadioButton rb4RadioButton;
     //
     private JButton buttonSubmit;
     private JPanel formPanel;
@@ -33,6 +28,8 @@ public class CreateGameUI extends JFrame  {
         setTitle("Football Player Simulator - Nouvelle partie");
         Image wallpaper = new Image("menu_wp.jpg");
         setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
+        Image icon = new Image("icon.png");
+        setIconImage(new ImageIcon(icon.getImage()).getImage());
         // important!
         setLayout(new GridBagLayout());
         //
@@ -72,16 +69,16 @@ public class CreateGameUI extends JFrame  {
 
 
 
-                String rbValue = null;
+                /*String rbValue = null;
                 // get rb selected value
                 for (Component c : formPanel.getComponents()) {
                     if (c instanceof JRadioButton && ((JRadioButton) c).isSelected()) {
                         rbValue = ((JRadioButton) c).getText();
                     }
-                }
+                }*/
 
 
-                if(!nameTxtField.getText().isEmpty() && !fnameTxtField.getText().isEmpty() && rbValue != null) {
+                if(!nameTxtField.getText().isEmpty() && !fnameTxtField.getText().isEmpty()) {
 
                     buttonSubmit.setEnabled(false);
                     cancelButton.setEnabled(false);
@@ -91,7 +88,7 @@ public class CreateGameUI extends JFrame  {
                             fnameTxtField.getText(),
                             (int) heightComboBox.getSelectedItem(),
                             (int) numComboBox.getSelectedItem(),
-                            rbValue);
+                            "default");
 
 
                     JsonSaveManager jsonSaveManager = new JsonSaveManager();

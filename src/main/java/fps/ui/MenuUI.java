@@ -23,6 +23,8 @@ public class MenuUI extends JFrame {
         setTitle("Football Player Simulator");
         Image wallpaper = new Image("menu_wp.jpg");
         setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
+        Image icon = new Image("icon.png");
+        setIconImage(new ImageIcon(icon.getImage()).getImage());
         // important!
         setLayout(new GridBagLayout());
         //

@@ -27,6 +27,8 @@ public class LoadGameUI extends JFrame {
         JsonSaveManager jsonSaveManager = new JsonSaveManager();
         DefaultListModel<Character> files = jsonSaveManager.loadSavesFiles();
         setContentPane(new JLabel(new ImageIcon((wallpaper.getImage()))));
+        Image icon = new Image("icon.png");
+        setIconImage(new ImageIcon(icon.getImage()).getImage());
         SavesRenderer renderer = new SavesRenderer();
         savesList.setCellRenderer(renderer);
         retourButton.addActionListener(back());
